@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentListMember">
+    <fragment
+        android:id="@+id/fragmentListMember"
+        android:name="com.soft.attendancekt.ui.FragmentListMember"
+        android:label="FragmentListMember" >
+        <action
+            android:id="@+id/action_fragmentListMember_to_fragmentAddMember"
+            app:destination="@id/fragmentAddMember" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddMember"
+        android:name="com.soft.attendancekt.ui.FragmentAddMember"
+        android:label="FragmentAddMember" />
+</navigation>
