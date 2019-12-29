@@ -7,15 +7,15 @@ import androidx.room.TypeConverters
 @Entity
 data class Member(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    var name: String,
-    var age: Int,
+    val id: Int = 0,
+    var name: String = "",
+    var age: Int = 0,
 //    @TypeConverters(TypeConverter::class)
 //    val gender: Gender,
-    var phone: String,
-    var email: String,
-    var photo: String,
-    var barcode: String
+    var phone: String = "",
+    var email: String = "",
+    var photo: String = "",
+    var barcode: String = ""
 )/*{
     enum class Gender{
         MALE, FEMALE

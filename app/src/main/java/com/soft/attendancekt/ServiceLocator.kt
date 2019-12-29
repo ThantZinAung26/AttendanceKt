@@ -2,6 +2,7 @@ package com.soft.attendancekt
 
 import android.content.Context
 import androidx.room.Room
+import com.soft.attendancekt.model.repo.AttendanceRepo
 import com.soft.attendancekt.model.repo.MemberRepo
 import com.soft.attendancekt.util.AppDatabase
 
@@ -21,12 +22,16 @@ interface ServiceLocator {
 
     fun memberRepo(): MemberRepo
 
+    val attendanceRepo: AttendanceRepo
+
     class DefaultServiceLocator(val context: Context) : ServiceLocator {
         val database: AppDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .allowMainThreadQueries().build()
 
 
         override fun memberRepo(): MemberRepo = MemberRepo(database.memberDao())
+
+        override val attendanceRepo by lazy { AttendanceRepo(database.attendanceDao()) }
 
     }
 }

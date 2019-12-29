@@ -4,7 +4,7 @@
     app:startDestination="@id/fragmentListMember">
     <fragment
         android:id="@+id/fragmentListMember"
-        android:name="com.soft.attendancekt.ui.FragmentListMember"
+        android:name="com.soft.attendancekt.ui.member.FragmentListMember"
         android:label="FragmentListMember" >
         <action
             android:id="@+id/action_fragmentListMember_to_fragmentAddMember"
@@ -12,6 +12,6 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAddMember"
-        android:name="com.soft.attendancekt.ui.FragmentAddMember"
+        android:name="com.soft.attendancekt.ui.member.FragmentAddMember"
         android:label="FragmentAddMember" />
 </navigation>
