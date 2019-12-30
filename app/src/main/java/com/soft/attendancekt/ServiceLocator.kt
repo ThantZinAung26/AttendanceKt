@@ -20,7 +20,7 @@ interface ServiceLocator {
 
     }
 
-    fun memberRepo(): MemberRepo
+    val memberRepo: MemberRepo
 
     val attendanceRepo: AttendanceRepo
 
@@ -28,8 +28,8 @@ interface ServiceLocator {
         val database: AppDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .allowMainThreadQueries().build()
 
+        override val memberRepo: MemberRepo by lazy { MemberRepo(database.memberDao()) }
 
-        override fun memberRepo(): MemberRepo = MemberRepo(database.memberDao())
 
         override val attendanceRepo by lazy { AttendanceRepo(database.attendanceDao()) }
 

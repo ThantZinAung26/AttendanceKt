@@ -9,21 +9,26 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.soft.attendancekt.MainActivity
 import com.soft.attendancekt.R
 import com.soft.attendancekt.ui.MemberAdapter
 import kotlinx.android.synthetic.main.fragment_list_item.*
 
 class FragmentListMember : Fragment() {
 
-    lateinit var memberViewModel: MemberListViewModel
+    lateinit var memberListViewModel: MemberListViewModel
     lateinit var memberAdapter: MemberAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         memberAdapter = MemberAdapter()
-        memberViewModel = ViewModelProviders.of(this).get(MemberListViewModel::class.java)
-        memberViewModel.memberListViewModel.observe(this, Observer { memberAdapter.submitList(it) })
-        memberViewModel.getMembers()
+
+        memberListViewModel = ViewModelProviders.of(this).get(MemberListViewModel::class.java)
+
+        memberListViewModel.memberListViewModel.observe(this, Observer {
+            memberAdapter.submitList(it)
+        })
+
         memberAdapter.adapterItemClickListener = object : MemberAdapter.AdapterItemClickListener {
             override fun onClick(position: Int) {
                 val args = Bundle()

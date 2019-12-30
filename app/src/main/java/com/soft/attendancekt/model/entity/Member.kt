@@ -10,14 +10,13 @@ data class Member(
     val id: Int = 0,
     var name: String = "",
     var age: Int = 0,
-//    @TypeConverters(TypeConverter::class)
-//    val gender: Gender,
+    val gender: Gender = Gender.MALE,
     var phone: String = "",
     var email: String = "",
     var photo: String = "",
     var barcode: String = ""
-)/*{
-    enum class Gender{
-        MALE, FEMALE
-    }
-}*/
+)
+
+enum class Gender{
+    MALE, FEMALE
+}

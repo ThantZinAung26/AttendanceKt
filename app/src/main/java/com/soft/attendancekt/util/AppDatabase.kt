@@ -7,6 +7,7 @@ import androidx.room.TypeConverters
 import com.soft.attendancekt.model.dao.AttendanceDao
 import com.soft.attendancekt.model.dao.MemberDao
 import com.soft.attendancekt.model.entity.Attendance
+import com.soft.attendancekt.model.entity.Gender
 import com.soft.attendancekt.model.entity.Member
 import com.soft.attendancekt.model.entity.Status
 import org.joda.time.DateTime
@@ -49,5 +50,13 @@ class TypeConverterr {
         @JvmStatic
         @TypeConverter
         fun setAttendanceStatus(status: Status): Int = status.ordinal
+
+        @JvmStatic
+        @TypeConverter
+        fun getGender(value: Int): Gender = Gender.values()[value]
+
+        @JvmStatic
+        @TypeConverter
+        fun setGender(gender: Gender): Int = gender.ordinal
     }
 }

@@ -12,7 +12,7 @@ import com.soft.attendancekt.model.entity.Member
 class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel(application) {
 
     private val attendanceRepo = ServiceLocator.getInstance(application).attendanceRepo
-    private val memberRepo = ServiceLocator.getInstance(application).memberRepo()
+    private val memberRepo = ServiceLocator.getInstance(application).memberRepo
 
     val attendanceId = MutableLiveData<Long>()
 

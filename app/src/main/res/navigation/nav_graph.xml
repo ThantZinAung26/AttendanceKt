@@ -14,4 +14,16 @@
         android:id="@+id/fragmentAddMember"
         android:name="com.soft.attendancekt.ui.member.FragmentAddMember"
         android:label="FragmentAddMember" />
+    <fragment
+        android:id="@+id/memberAttendanceFragment"
+        android:name="com.soft.attendancekt.ui.attendance.MemberAttendanceFragment"
+        android:label="MemberAttendanceFragment" >
+        <action
+            android:id="@+id/action_memberAttendanceFragment_to_memberAttendanceEditFragment"
+            app:destination="@id/memberAttendanceEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/memberAttendanceEditFragment"
+        android:name="com.soft.attendancekt.ui.attendance.edit.MemberAttendanceEditFragment"
+        android:label="MemberAttendanceEditFragment" />
 </navigation>

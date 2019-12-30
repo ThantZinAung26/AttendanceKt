@@ -30,7 +30,7 @@ class MemberAdapter : ListAdapter<Member, MemberAdapter.MemberViewHolder>(DIFF_C
         fun onClick(position: Int)
     }
 
-    var adapterItemClickListener: AdapterItemClickListener? = null
+    lateinit var adapterItemClickListener: AdapterItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
 
@@ -48,7 +48,7 @@ class MemberAdapter : ListAdapter<Member, MemberAdapter.MemberViewHolder>(DIFF_C
 
         init {
             itemView.setOnClickListener{
-                adapterItemClickListener?.onClick(adapterPosition)
+                adapterItemClickListener.onClick(adapterPosition)
             }
         }
 
@@ -60,7 +60,6 @@ class MemberAdapter : ListAdapter<Member, MemberAdapter.MemberViewHolder>(DIFF_C
     }
 
     fun getItemAt(position: Int): Member = getItem(position)
-
 
 }
 
