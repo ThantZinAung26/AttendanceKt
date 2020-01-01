@@ -1,12 +1,15 @@
 package com.soft.attendancekt.ui.attendance.edit
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.soft.attendancekt.R
 import kotlinx.android.synthetic.main.fragment_attendance_edit.*
+import java.util.*
 
 class MemberAttendanceEditFragment : Fragment() {
 
@@ -14,7 +17,14 @@ class MemberAttendanceEditFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this)[MemberAttendanceEditViewModel::class.java]
+
+        viewModel.members.observe(this, androidx.lifecycle.Observer {
+            viewModel.members
+        })
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,13 +36,13 @@ class MemberAttendanceEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*spinner.setDro{
-            viewModel.members.value
-        }*/
+
         memberInput.setOnClickListener {
-
+            val dialog = AlertDialog.Builder(this.context)
+            dialog.setTitle("Select Member")
+            dialog.show()
         }
-
     }
+
 
 }
