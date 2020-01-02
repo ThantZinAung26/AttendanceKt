@@ -17,6 +17,7 @@ data class Attendance(
     val status: Status = Status.PRESENT,
     @ColumnInfo(name = "member_id")
     var memberId: Int = 0
+
 )
 
 enum class Status {

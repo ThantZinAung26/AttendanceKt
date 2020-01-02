@@ -20,4 +20,6 @@ class AttendanceRepo(private val dao: AttendanceDao) {
 
     fun getAll(): LiveData<PagedList<MemberAttendance>> =
         LivePagedListBuilder(dao.getAll(), 3).build()
+
+    fun deleteAttendance(attendance: Attendance) = dao.delete(attendance)
 }

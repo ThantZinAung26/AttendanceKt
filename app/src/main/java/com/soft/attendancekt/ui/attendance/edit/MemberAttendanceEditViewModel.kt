@@ -41,6 +41,10 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
         attendance.value?.also { attendanceRepo.save(it) }
     }
 
+    fun delete() {
+        attendance.value?.also { attendanceRepo.deleteAttendance(it) }
+    }
+
 
 
 }

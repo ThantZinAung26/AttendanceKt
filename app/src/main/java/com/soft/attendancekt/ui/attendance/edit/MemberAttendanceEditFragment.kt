@@ -12,6 +12,8 @@ import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import com.soft.attendancekt.MainActivity
 import com.soft.attendancekt.R
 import com.soft.attendancekt.model.entity.Member
 import com.soft.attendancekt.ui.MemberAdapter
@@ -55,12 +57,6 @@ class MemberAttendanceEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         memberInput.setOnClickListener {
-            val list = arrayListOf<String>(
-                    "Min Khant Kyaw",
-                    "Thant Sin Aung",
-                    "Thein mwe naing",
-                    "Khin Zar li"
-                )
 
             val dialog = AlertDialog.Builder(this.activity)
             dialog.setTitle("Select Member")
@@ -68,12 +64,30 @@ class MemberAttendanceEditFragment : Fragment() {
                 adapter.getItem(i)?.also {
                     viewModel.memberId.value = it.id
                     viewModel.attendance.value?.memberId = it.id
+                    memberInput.setText(viewModel.member.value?.name)
                 }
                 di.dismiss()
             }
             dialog.create()
             dialog.show()
         }
+
+
+        save.setOnClickListener {
+            viewModel.save()
+            findNavController().navigateUp()
+        }
+
+        delete.setOnClickListener {
+            viewModel.delete()
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val activity: MainActivity = requireActivity() as MainActivity
+        activity.hideKeyboard()
     }
 
 
