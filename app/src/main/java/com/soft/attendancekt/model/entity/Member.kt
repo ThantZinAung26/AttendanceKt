@@ -15,7 +15,11 @@ data class Member(
     var email: String = "",
     var photo: String = "",
     var barcode: String = ""
-)
+){
+    override fun toString(): String {
+        return name
+    }
+}
 
 enum class Gender{
     MALE, FEMALE

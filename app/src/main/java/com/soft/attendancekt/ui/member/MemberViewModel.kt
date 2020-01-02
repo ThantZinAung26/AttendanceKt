@@ -1,6 +1,7 @@
 package com.soft.attendancekt.ui.member
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,8 +19,10 @@ class MemberViewModel(application: Application) : AndroidViewModel(application) 
     var member: LiveData<Member> = Transformations.switchMap(memberId) {
 
         if (it > 0) {
+            Log.e("TAG", "Old")
             memberRepo.getMember(it)
         } else {
+            Log.e("TAG", "New")
             val liveData = MutableLiveData<Member>()
             liveData.value = Member()
             liveData

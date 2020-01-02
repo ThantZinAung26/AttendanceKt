@@ -1,6 +1,7 @@
 package com.soft.attendancekt.ui.attendance.edit
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,8 +19,10 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
 
     val attendance: LiveData<Attendance> = Transformations.switchMap(attendanceId) {
         if (it > 0) {
+            Log.e("TAG", "Old")
             attendanceRepo.getAttendance(it)
         } else {
+            Log.e("TAG", "New")
             val liveData = MutableLiveData<Attendance>()
             liveData.value = Attendance()
             liveData
@@ -31,5 +34,7 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
     fun save() {
         attendance.value?.also { attendanceRepo.save(it) }
     }
+
+
 
 }
