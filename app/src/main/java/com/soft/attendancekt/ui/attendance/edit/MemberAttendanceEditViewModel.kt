@@ -15,6 +15,8 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
     private val attendanceRepo = ServiceLocator.getInstance(application).attendanceRepo
     private val memberRepo = ServiceLocator.getInstance(application).memberRepo
 
+    val memberId = MutableLiveData<Int>()
+
     val attendanceId = MutableLiveData<Long>()
 
     val attendance: LiveData<Attendance> = Transformations.switchMap(attendanceId) {
@@ -27,6 +29,10 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
             liveData.value = Attendance()
             liveData
         }
+    }
+
+    var member: LiveData<Member> = Transformations.switchMap(memberId) {
+        memberRepo.getMember(it)
     }
 
     val members: LiveData<List<Member>> by lazy { memberRepo.getAll() }

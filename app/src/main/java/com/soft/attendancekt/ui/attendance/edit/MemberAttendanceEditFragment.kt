@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.soft.attendancekt.R
 import com.soft.attendancekt.model.entity.Member
 import com.soft.attendancekt.ui.MemberAdapter
+import com.soft.attendancekt.ui.member.FragmentAddMember
 import kotlinx.android.synthetic.main.fragment_attendance_edit.*
 import kotlinx.android.synthetic.main.layout_dialog.*
 import java.util.*
@@ -37,8 +38,8 @@ class MemberAttendanceEditFragment : Fragment() {
         viewModel.attendance.observe(this, androidx.lifecycle.Observer {
             viewModel.attendanceId.value
         })
-
-        viewModel.attendanceId.value = 0
+        val id = arguments?.getLong(FragmentAddMember.KEY_MEMBER_ID) ?: 0
+        viewModel.attendanceId.value = id
 
     }
 
@@ -64,19 +65,15 @@ class MemberAttendanceEditFragment : Fragment() {
             val dialog = AlertDialog.Builder(this.activity)
             dialog.setTitle("Select Member")
             dialog.setAdapter(adapter) { di, i ->
-                adapter.getItem(i).also {
-                    viewModel.attendance.value
+                adapter.getItem(i)?.also {
+                    viewModel.memberId.value = it.id
+                    viewModel.attendance.value?.memberId = it.id
                 }
                 di.dismiss()
             }
             dialog.create()
             dialog.show()
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
     }
 
 
