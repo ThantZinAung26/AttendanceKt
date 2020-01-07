@@ -7,18 +7,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.soft.attendancekt.MainActivity
 import com.soft.attendancekt.R
+import com.soft.attendancekt.databinding.AttendanceEditBinding
 import com.soft.attendancekt.model.entity.Member
 import com.soft.attendancekt.ui.MemberAdapter
 import com.soft.attendancekt.ui.member.FragmentAddMember
 import kotlinx.android.synthetic.main.fragment_attendance_edit.*
+import kotlinx.android.synthetic.main.fragment_attendance_edit.view.*
 import kotlinx.android.synthetic.main.layout_dialog.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,6 +27,8 @@ class MemberAttendanceEditFragment : Fragment() {
 
     lateinit var viewModel: MemberAttendanceEditViewModel
     lateinit var adapter: ArrayAdapter<Member>
+    lateinit var binding: AttendanceEditBinding
+    lateinit var activity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,7 @@ class MemberAttendanceEditFragment : Fragment() {
         })
 
         viewModel.attendance.observe(this, androidx.lifecycle.Observer {
-            viewModel.attendanceId.value
+            viewModel.memberId.value = it.memberId
         })
         val id = arguments?.getLong(FragmentAddMember.KEY_MEMBER_ID) ?: 0
         viewModel.attendanceId.value = id
@@ -50,28 +52,34 @@ class MemberAttendanceEditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_attendance_edit, container, false)
+        binding = AttendanceEditBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        activity = requireActivity() as MainActivity
         memberInput.setOnClickListener {
-
             val dialog = AlertDialog.Builder(this.activity)
             dialog.setTitle("Select Member")
             dialog.setAdapter(adapter) { di, i ->
                 adapter.getItem(i)?.also {
                     viewModel.memberId.value = it.id
                     viewModel.attendance.value?.memberId = it.id
-                    memberInput.setText(viewModel.member.value?.name)
                 }
                 di.dismiss()
             }
             dialog.create()
             dialog.show()
-        }
+            activity.hideKeyboard()
 
+            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                val radioButton = view.findViewById<RadioButton>(checkedId)
+                viewModel.attendance.value?.status.also { radioButton?.text }
+            }
+        }
 
         save.setOnClickListener {
             viewModel.save()
@@ -86,9 +94,12 @@ class MemberAttendanceEditFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        val activity: MainActivity = requireActivity() as MainActivity
         activity.hideKeyboard()
     }
 
-
+    //status radio
+    fun onCustomStatus(view: View) {
+        val radio: RadioButton = view.findViewById(radioGroup.checkedRadioButtonId)
+        viewModel.attendance.value?.status.also { radio.text }
+    }
 }

@@ -26,7 +26,7 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
         } else {
             Log.e("TAG", "New")
             val liveData = MutableLiveData<Attendance>()
-            liveData.value = Attendance()
+                liveData.value = Attendance()
             liveData
         }
     }
