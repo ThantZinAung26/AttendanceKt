@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         var view = currentFocus
         if (view == null) {
             view = View(this)
+
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }

@@ -8,11 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox</item>
+        <item name="bottomSheetDialogTheme" >@style/AppBottomSheet</item>
     </style>
     
     <style name="AppTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppBottomSheet"
+        parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppMoedlstyle</item>
+    </style>
+
+    <style name="AppMoedlstyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/curve_background</item>
     </style>
 
 </resources>

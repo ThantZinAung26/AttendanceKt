@@ -190,6 +190,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnScan"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:backgroundTint="#f7f7f2"

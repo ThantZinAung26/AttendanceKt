@@ -61,6 +61,7 @@ class MemberAttendanceEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity = requireActivity() as MainActivity
+        activity.hideKeyboard()
         memberInput.setOnClickListener {
             val dialog = AlertDialog.Builder(this.activity)
             dialog.setTitle("Select Member")
@@ -69,16 +70,18 @@ class MemberAttendanceEditFragment : Fragment() {
                     viewModel.memberId.value = it.id
                     viewModel.attendance.value?.memberId = it.id
                 }
+                activity.hideKeyboard()
+
                 di.dismiss()
             }
             dialog.create()
             dialog.show()
-            activity.hideKeyboard()
 
-            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+
+            /*radioGroup.setOnCheckedChangeListener { group, checkedId ->
                 val radioButton = view.findViewById<RadioButton>(checkedId)
                 viewModel.attendance.value?.status.also { radioButton?.text }
-            }
+            }*/
         }
 
         save.setOnClickListener {
@@ -98,8 +101,8 @@ class MemberAttendanceEditFragment : Fragment() {
     }
 
     //status radio
-    fun onCustomStatus(view: View) {
-        val radio: RadioButton = view.findViewById(radioGroup.checkedRadioButtonId)
-        viewModel.attendance.value?.status.also { radio.text }
+    fun onCustomStatus(radioGroup: RadioGroup, id: Int) {
+        //val radio: RadioButton
+        //viewModel.attendance.value?.status.also { radio.text }
     }
 }
