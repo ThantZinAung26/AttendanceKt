@@ -1,5 +1,6 @@
 package com.soft.attendancekt.model.entity
 
+import androidx.databinding.BaseObservable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
@@ -15,7 +16,8 @@ data class Member(
     var email: String = "",
     var photo: String = "",
     var barcode: String = ""
-){
+) : BaseObservable(){
+
     override fun toString(): String {
         return name
     }
