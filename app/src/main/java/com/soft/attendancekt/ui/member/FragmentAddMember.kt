@@ -40,7 +40,7 @@ class FragmentAddMember : Fragment() {
         const val REQUEST_PICK_IMAGE = 3
     }
 
-    private lateinit var currentPhotoFilePath: String
+    lateinit var currentPhotoFilePath: String
     lateinit var memberViewModel: MemberViewModel
     lateinit var memberBinding: MemberBinding
 
@@ -69,9 +69,11 @@ class FragmentAddMember : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         val result: IntentResult =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && currentPhotoFilePath != null) {
             memberBinding.takePhoto.setImageURI(Uri.parse(currentPhotoFilePath))
             memberViewModel.member.value?.photo = currentPhotoFilePath
         } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {

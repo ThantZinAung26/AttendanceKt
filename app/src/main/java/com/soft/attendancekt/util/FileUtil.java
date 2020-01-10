@@ -33,6 +33,7 @@ public class FileUtil {
         Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, scaledOpts);
 
         FileOutputStream fos = new FileOutputStream(imageFile);
+        assert bitmap != null;
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
         return bitmap;
