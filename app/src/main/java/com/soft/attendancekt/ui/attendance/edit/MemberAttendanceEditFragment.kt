@@ -15,6 +15,7 @@ import com.soft.attendancekt.MainActivity
 import com.soft.attendancekt.R
 import com.soft.attendancekt.databinding.AttendanceEditBinding
 import com.soft.attendancekt.model.entity.Member
+import com.soft.attendancekt.model.entity.Status
 import com.soft.attendancekt.ui.MemberAdapter
 import com.soft.attendancekt.ui.member.FragmentAddMember
 import kotlinx.android.synthetic.main.fragment_attendance_edit.*
@@ -77,12 +78,23 @@ class MemberAttendanceEditFragment : Fragment() {
             dialog.create()
             dialog.show()
 
-
             /*radioGroup.setOnCheckedChangeListener { group, checkedId ->
                 val radioButton = view.findViewById<RadioButton>(checkedId)
-                viewModel.attendance.value?.status.also { radioButton?.text }
+                viewModel.attendance.value?.status.apply { radioButton?.text }
             }*/
         }
+
+        radioGroup.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+                when (checkedId) {
+                    R.id.rbPresent -> viewModel.attendance.value?.status =
+                        Status.PRESENT
+                    R.id.rbAbsent -> viewModel.attendance.value?.status =
+                        Status.ABSENT
+                }
+            }
+
+        })
 
         save.setOnClickListener {
             viewModel.save()
@@ -92,7 +104,6 @@ class MemberAttendanceEditFragment : Fragment() {
         delete.setOnClickListener {
             viewModel.delete()
         }
-
     }
 
     override fun onDestroy() {

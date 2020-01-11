@@ -14,7 +14,7 @@ data class Attendance(
     var id: Long = 0,
     @ColumnInfo(name = "event_time")
     var eventTime: DateTime = DateTime.now(),
-    val status: Status = Status.PRESENT,
+    var status: Status = Status.PRESENT,
     @ColumnInfo(name = "member_id")
     var memberId: Int = 0
 

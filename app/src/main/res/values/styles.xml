@@ -17,7 +17,7 @@
     </style>
 
     <style name="AppBottomSheet"
-        parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        parent="Theme.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppMoedlstyle</item>
     </style>
 

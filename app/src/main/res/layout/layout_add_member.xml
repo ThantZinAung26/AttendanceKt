@@ -200,29 +200,31 @@
 
             <Button
                 android:id="@+id/save"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="#2E8804"
                 android:text="Save"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/delete"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
+                app:strokeColor="#66BB6A" />
 
             <Button
                 android:id="@+id/delete"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#F44336"
                 android:text="Delete"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="@+id/save"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
                 app:layout_constraintStart_toEndOf="@+id/save"
-                app:layout_constraintTop_toTopOf="@+id/save" />
+                app:layout_constraintTop_toTopOf="@+id/save"
+                app:strokeColor="#EF5350" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

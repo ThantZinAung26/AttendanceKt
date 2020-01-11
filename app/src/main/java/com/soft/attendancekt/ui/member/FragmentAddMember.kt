@@ -67,17 +67,26 @@ class FragmentAddMember : Fragment() {
         return memberBinding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val id = arguments?.getInt(KEY_MEMBER_ID) ?: 0
+        memberViewModel.member.observe(this, Observer {
+            memberViewModel.member
+        })
+        memberViewModel.memberId.value = id
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         val result: IntentResult =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && currentPhotoFilePath != null) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             memberBinding.takePhoto.setImageURI(Uri.parse(currentPhotoFilePath))
             memberViewModel.member.value?.photo = currentPhotoFilePath
         } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
-            val photoUri: Uri? = data?.data
+            var photoUri: Uri? = data?.data
 
             try {
                 val bitmap: Bitmap =
@@ -88,7 +97,7 @@ class FragmentAddMember : Fragment() {
                 e.printStackTrace();
                 Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show();
             }
-        } else if (result != null) {
+        } else {
             if (result.contents != null) {
                 val member = memberViewModel.member.value
             }
