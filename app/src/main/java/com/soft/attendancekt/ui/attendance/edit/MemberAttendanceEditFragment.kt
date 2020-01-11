@@ -85,15 +85,9 @@ class MemberAttendanceEditFragment : Fragment() {
         }
 
         radioGroup.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
-            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when (checkedId) {
-                    R.id.rbPresent -> viewModel.attendance.value?.status =
-                        Status.PRESENT
-                    R.id.rbAbsent -> viewModel.attendance.value?.status =
-                        Status.ABSENT
-                }
+            override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
+                onCustomStatus(group, checkedId)
             }
-
         })
 
         save.setOnClickListener {
@@ -114,6 +108,12 @@ class MemberAttendanceEditFragment : Fragment() {
     //status radio
     fun onCustomStatus(radioGroup: RadioGroup, id: Int) {
         //val radio: RadioButton
-        //viewModel.attendance.value?.status.also { radio.text }
+        //viewModel.attendance.value?.status = Status.PRESENT
+        when (id) {
+            R.id.rbPresent -> viewModel.attendance.value?.status =
+                Status.PRESENT
+            R.id.rbAbsent -> viewModel.attendance.value?.status =
+                Status.ABSENT
+        }
     }
 }

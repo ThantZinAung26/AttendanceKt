@@ -25,4 +25,8 @@
         <item name="android:background">@drawable/curve_background</item>
     </style>
 
+    <style name="AppTheme.Primary" parent="ThemeOverlay.MaterialComponents.Light">
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 </resources>
