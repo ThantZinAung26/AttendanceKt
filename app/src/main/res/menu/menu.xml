@@ -9,4 +9,11 @@
         android:id="@+id/memberAttendanceFragment"
         android:title="Attendance"
         android:icon="@drawable/ic_info"/>
+
+    <item
+        android:id="@+id/fragmentLogin"
+        android:title="Chat Room"
+        android:icon="@drawable/ic_chat_black_24dp"/>
+
+
 </menu>

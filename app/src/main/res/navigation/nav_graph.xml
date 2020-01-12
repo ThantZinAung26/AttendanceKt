@@ -26,4 +26,16 @@
         android:id="@+id/memberAttendanceEditFragment"
         android:name="com.soft.attendancekt.ui.attendance.edit.MemberAttendanceEditFragment"
         android:label="MemberAttendanceEditFragment" />
+    <fragment
+        android:id="@+id/fragmentLogin"
+        android:name="com.soft.attendancekt.ui.chat.FragmentLogin"
+        android:label="FragmentLogin" >
+        <action
+            android:id="@+id/action_fragmentLogin2_to_fragmentChatting"
+            app:destination="@id/fragmentChatting" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentChatting"
+        android:name="com.soft.attendancekt.ui.chat.FragmentChatting"
+        android:label="FragmentChatting" />
 </navigation>
