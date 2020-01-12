@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="msg"
+            type="com.soft.attendancekt.model.entity.ChatMessage" />
+    </data>
 
     <LinearLayout
-        android:paddingTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="8dp"
+        android:paddingTop="8dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/chat_message_drawable"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:drawableStart="@drawable/ic_person"
-            android:textStyle="bold"
-            tools:text="Name" />
+            android:background="@drawable/chat_message_drawable"
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:textColor="#ffffff"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="@{msg.sender}"
+                android:drawableStart="@drawable/ic_person"
+                android:textStyle="bold"
+                tools:text="Name" />
 
-            android:layout_height="wrap_content"
-            tools:text="Message" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="#ffffff"
+                android:text="@{msg.content}"
+                android:layout_height="wrap_content"
+                tools:text="Message" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>
