@@ -9,6 +9,8 @@ import androidx.lifecycle.Transformations
 import com.soft.attendancekt.ServiceLocator
 import com.soft.attendancekt.model.entity.Member
 import com.soft.attendancekt.model.repo.MemberRepo
+import com.soft.attendancekt.util.AppExecutor
+import java.lang.Exception
 
 class MemberViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -32,13 +34,28 @@ class MemberViewModel(application: Application) : AndroidViewModel(application) 
     //null pointer
     fun save() {
         //memberRepo.save(member.value!!)
-        member.value?.also {
-            memberRepo.save(it)
+        AppExecutor.io()?.execute {
+            try {
+                member.value?.also {
+                    memberRepo.save(it)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
+
     }
 
     fun delete() {
-        member.value?.also { memberRepo.deleteMember(it) }
+
+        AppExecutor.io()?.execute {
+            try {
+                member.value?.also { memberRepo.deleteMember(it) }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
     }
 
 }

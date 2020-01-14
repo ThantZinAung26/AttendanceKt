@@ -25,7 +25,7 @@ interface ServiceLocator {
     val attendanceRepo: AttendanceRepo
 
     class DefaultServiceLocator(val context: Context) : ServiceLocator {
-        val database: AppDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+        val database: AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, "attendance_record")
             .allowMainThreadQueries().build()
 
         override val memberRepo: MemberRepo by lazy { MemberRepo(database.memberDao()) }
