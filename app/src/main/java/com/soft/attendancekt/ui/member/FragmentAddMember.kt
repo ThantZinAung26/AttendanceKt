@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -38,6 +39,7 @@ class FragmentAddMember : Fragment() {
         const val KEY_MEMBER_ID = "member_id"
         const val REQUEST_IMAGE_CAPTURE = 1
         const val REQUEST_PICK_IMAGE = 3
+        val PERMISSION_WRITE_STORAGE = 4;
     }
 
     lateinit var currentPhotoFilePath: String
@@ -76,17 +78,47 @@ class FragmentAddMember : Fragment() {
         memberViewModel.memberId.value = id
     }
 
+    /*override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result =
+            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (requestCode == com.team.androidpos.ui.product.ProductEditFragment.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && currentPhotoFilePath != null) {
+            binding.btnTakePhoto.setImageURI(Uri.parse(currentPhotoFilePath))
+            viewModel.product.getValue().setImage(currentPhotoFilePath)
+        } else if (requestCode == com.team.androidpos.ui.product.ProductEditFragment.REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
+            assert(data != null)
+            val photoURI = data!!.data
+            try {
+                val bitmap =
+                    FileUtil.writeImage(requireContext(), photoURI, createImageFile())
+                binding.btnTakePhoto.setImageBitmap(bitmap)
+                viewModel.product.getValue().setImage(currentPhotoFilePath)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+            }
+        } else if (result != null) {
+            if (result.contents != null) {
+                val product: Product = viewModel.product.getValue()
+                product.setBarcode(result.contents)
+            }
+        }
+    }*/
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        var result: IntentResult =
+        val result =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             memberBinding.takePhoto.setImageURI(Uri.parse(currentPhotoFilePath))
             memberViewModel.member.value?.photo = currentPhotoFilePath
         } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
-            var photoUri: Uri? = data?.data
+            val photoUri: Uri? = data?.data
 
             try {
                 val bitmap: Bitmap =
@@ -117,7 +149,7 @@ class FragmentAddMember : Fragment() {
                 takePicture()
             }
         }
-}
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -138,6 +170,12 @@ class FragmentAddMember : Fragment() {
         }
 
         take_photo.setOnClickListener {
+
+            if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_WRITE_STORAGE)
+                return@setOnClickListener
+            }
+
             val bottomSheetDialog = BottomSheetDialog(requireContext())
             val bsview = layoutInflater.inflate(R.layout.layout_bottom_sheet_view, null)
 
@@ -149,12 +187,15 @@ class FragmentAddMember : Fragment() {
             val fileBtn = bsview.findViewById<ImageButton>(R.id.file)
             fileBtn.setOnClickListener {
                 bottomSheetDialog.dismiss()
+                currentChoosePhoto()
             }
             bottomSheetDialog.setContentView(bsview);
             bottomSheetDialog.show();
         }
 
     }
+
+
 
 
     override fun onDestroy() {
@@ -185,6 +226,16 @@ class FragmentAddMember : Fragment() {
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
             }
         }
+    }
+
+    fun currentChoosePhoto() {
+        val contentIntent = Intent(Intent.ACTION_GET_CONTENT)
+        contentIntent.type = "image/*"
+        val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val chooserIntent = Intent.createChooser(contentIntent, "Select browser image")
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickImageIntent))
+        startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE)
+
     }
 
     @Throws(IOException::class)

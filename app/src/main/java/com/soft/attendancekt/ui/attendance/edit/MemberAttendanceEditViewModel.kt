@@ -9,6 +9,7 @@ import androidx.lifecycle.Transformations
 import com.soft.attendancekt.ServiceLocator
 import com.soft.attendancekt.model.entity.Attendance
 import com.soft.attendancekt.model.entity.Member
+import com.soft.attendancekt.util.AppExecutor
 
 class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -39,10 +40,15 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
     val members: LiveData<List<Member>> by lazy { memberRepo.getAll() }
 
     fun save() {
-        attendance.value?.also { attendanceRepo.save(it) }
+        AppExecutor.io()?.execute{
+            attendance.value?.also { attendanceRepo.save(it) }
+        }
+
     }
 
     fun delete() {
-        attendance.value?.also { attendanceRepo.deleteAttendance(it) }
+        AppExecutor.io()?.execute{
+            attendance.value?.also { attendanceRepo.deleteAttendance(it) }
+        }
     }
 }
