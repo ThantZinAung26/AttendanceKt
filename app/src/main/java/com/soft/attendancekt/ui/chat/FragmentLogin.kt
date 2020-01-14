@@ -13,16 +13,16 @@ import kotlinx.android.synthetic.main.fragment_login.*
 
 class FragmentLogin : Fragment() {
 
-    private lateinit var viewModel:ChatMessageViewModel
+    private lateinit var viewModel: ChatMessageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity())[ChatMessageViewModel::class.java]
-        viewModel.connectResult.observe(requireActivity(), Observer {
-            if(it) {
-
+        /*viewModel.connectResult.observe(requireActivity(), Observer {
+            if (it) {
+                findNavController().navigate(R.id.action_fragmentLogin_to_fragmentChatting)
             }
-        })
+        })*/
     }
 
     override fun onCreateView(
@@ -35,17 +35,26 @@ class FragmentLogin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        btnJoin.setOnClickListener{
-
+        btnJoin.setOnClickListener {
             edUserName.text.toString().also {
                 progressBar.visibility = View.VISIBLE
                 viewModel.connect(it)
             }
-
-            findNavController().navigate(R.id.action_fragmentLogin2_to_fragmentChatting)
+            viewModel.connectResult.observe(requireActivity(), Observer {
+                if (it) {
+                    findNavController().navigate(R.id.action_fragmentLogin_to_fragmentChatting)
+                }
+            })
         }
 
     }
+
+    /*override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.disconnect()
+        viewModel.connectResult.removeObserver {
+            findNavController().navigate(R.id.action_fragmentLogin2_to_fragmentChatting)
+        }
+    }*/
 
 }

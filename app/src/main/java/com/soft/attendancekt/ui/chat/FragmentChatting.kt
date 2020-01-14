@@ -19,9 +19,9 @@ class FragmentChatting : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity())[ChatMessageViewModel::class.java]
-        viewModel.messages.observe(this, Observer {
-            adapter.submitList(it)
-            recyclerView.smoothScrollToPosition(it.size -1)
+        viewModel.messages.observe(this, Observer { list ->
+            adapter.submitList(list)
+            list?.also { recyclerView.smoothScrollToPosition(it.size -1) }
         })
     }
 
@@ -36,6 +36,7 @@ class FragmentChatting : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(view.context)
+
         layoutManager.stackFromEnd = true
         recyclerView.apply {
             setHasFixedSize(true)
@@ -47,6 +48,11 @@ class FragmentChatting : Fragment() {
             viewModel.send(edMessage.text.toString())
             edMessage.setText("")
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.disconnect()
     }
 
 }

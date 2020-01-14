@@ -17,6 +17,7 @@ import com.soft.attendancekt.databinding.AttendanceEditBinding
 import com.soft.attendancekt.model.entity.Member
 import com.soft.attendancekt.model.entity.Status
 import com.soft.attendancekt.ui.MemberAdapter
+import com.soft.attendancekt.ui.attendance.MemberAttendanceAdapter
 import com.soft.attendancekt.ui.member.FragmentAddMember
 import kotlinx.android.synthetic.main.fragment_attendance_edit.*
 import kotlinx.android.synthetic.main.fragment_attendance_edit.view.*
@@ -31,6 +32,10 @@ class MemberAttendanceEditFragment : Fragment() {
     lateinit var binding: AttendanceEditBinding
     lateinit var activity: MainActivity
 
+    companion object {
+        val MT_ID = "member_attendance_id"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this)[MemberAttendanceEditViewModel::class.java]
@@ -43,9 +48,9 @@ class MemberAttendanceEditFragment : Fragment() {
         viewModel.attendance.observe(this, androidx.lifecycle.Observer {
             viewModel.memberId.value = it.memberId
         })
-        val id = arguments?.getLong(FragmentAddMember.KEY_MEMBER_ID) ?: 0
-        viewModel.attendanceId.value = id
-
+//        val id = arguments?.getLong(FragmentAddMember.KEY_MEMBER_ID) ?: 0
+//        viewModel.attendanceId.value = id
+        viewModel.attendanceId.value = arguments?.getLong(MT_ID) ?: 0
     }
 
     override fun onCreateView(

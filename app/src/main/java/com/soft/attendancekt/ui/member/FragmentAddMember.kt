@@ -79,7 +79,7 @@ class FragmentAddMember : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        val result: IntentResult =
+        var result: IntentResult =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -117,7 +117,7 @@ class FragmentAddMember : Fragment() {
                 takePicture()
             }
         }
-    }
+}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

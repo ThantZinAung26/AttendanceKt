@@ -31,7 +31,7 @@
         android:name="com.soft.attendancekt.ui.chat.FragmentLogin"
         android:label="FragmentLogin" >
         <action
-            android:id="@+id/action_fragmentLogin2_to_fragmentChatting"
+            android:id="@+id/action_fragmentLogin_to_fragmentChatting"
             app:destination="@id/fragmentChatting" />
     </fragment>
     <fragment

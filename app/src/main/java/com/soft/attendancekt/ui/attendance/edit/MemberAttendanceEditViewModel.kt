@@ -17,6 +17,7 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
 
     val memberId = MutableLiveData<Int>()
 
+
     val attendanceId = MutableLiveData<Long>()
 
     val attendance: LiveData<Attendance> = Transformations.switchMap(attendanceId) {
@@ -44,7 +45,4 @@ class MemberAttendanceEditViewModel(application: Application) : AndroidViewModel
     fun delete() {
         attendance.value?.also { attendanceRepo.deleteAttendance(it) }
     }
-
-
-
 }

@@ -33,7 +33,11 @@ class MemberAttendanceAdapter : PagedListAdapter<MemberAttendance, MemberAttenda
         }
     }
 
+    interface AdapterItemClickListener{
+        fun onClick(position: Int)
+    }
 
+    var adapterItemClickListener: AdapterItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberAttendanceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -47,10 +51,18 @@ class MemberAttendanceAdapter : PagedListAdapter<MemberAttendance, MemberAttenda
 
     inner class MemberAttendanceViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            itemView.setOnClickListener{
+                adapterItemClickListener?.onClick(adapterPosition)
+            }
+        }
+
         fun bind(obj: MemberAttendance) {
             binding.setVariable(BR.obj, obj)
             binding.executePendingBindings()
         }
 
     }
+
+    fun getItemAt(position: Int) = getItem(position)
 }
